@@ -1,2 +1,2 @@
 # marine
-marine is a Store &amp; View model
+marine is a Store - View model

@@ -1,2 +1,6 @@
-import Store from './src/store.js'
-import Action from './src/action.js'
+var Marine = {
+    Action: 'Action',
+    Store: 'Store'
+}
+
+module.exports = Marine;
