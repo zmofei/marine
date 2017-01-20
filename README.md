@@ -3,7 +3,7 @@ marine is a Store - Model model
 
 ## Action
 
-### Define
+### Action - Define
 
 ```javascript
 Action.def('Home', {
@@ -14,10 +14,10 @@ Action.def('Home', {
 
 // After you define the action, it will bind to Action automaticly, you can call the function eaisy
 // eg: after define Home, you can use the Home as `Action.Home.emittest`
-Action.Home.emittest();Ï
+Action.Home.emittest();
 ```
 
-### action.Emit
+### Action - Emit
 
 
 ```javascript
