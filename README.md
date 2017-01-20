@@ -35,7 +35,7 @@ Action.def('Home', {
 
 ## Store
 
-### Define
+### Store - Define
 
 ```javascript
 Store.def('Home', {
@@ -43,7 +43,7 @@ Store.def('Home', {
 });
 ```
 
-### Listen
+### Store - Listen
 
 the Store return a object, which incloud the `store`, `channel` and `data`
 
@@ -64,7 +64,7 @@ Store.on('Home.channel', (obj) => {
 });
 ```
 
-### Unbind
+### Store - Unbind
 
 ```javascript
 var theStore = Store.on((obj) => {
