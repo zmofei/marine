@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 var marine = require('../index.js');
 
 describe('action', () => {
@@ -29,4 +30,13 @@ describe('action', () => {
         // expect().toBe('Name');
     });
 
+=======
+var action = require('../index.js');
+
+const add = require('./add');
+describe('init', () => {
+    it('should add two numbers', () => {
+        expect((3)).toBe(3);
+    });
+>>>>>>> 233dc85a1d5c59226ab0780d8d49741a441f050c
 });

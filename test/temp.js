@@ -35,7 +35,7 @@ var sto = Store.def('Home', {
 var a = Store.on((datas) => {
     console.log('on2 ', datas);
 });
-a();
+// a();
 
 // Store.on('Home', (datas) => {
 //     console.log('on Home', datas);
