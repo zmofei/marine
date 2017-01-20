@@ -1,5 +1,5 @@
 # marine
-marine is a Store - View model
+marine is a Store - Model model
 
 ## Action
 

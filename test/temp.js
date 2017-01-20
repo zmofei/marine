@@ -3,21 +3,12 @@ var Action = marine.Action;
 var Store = marine.Store;
 
 var act = Action.def('Home', {
-    'test': (action) => {
-        return action.name;
-    },
     'emittest': (action) => {
         action.emit({
             channel: 'homechannel',
             data: 'test',
             // stores: ['StoreTest', 'StoreTesta', 'StoreTesb']
         });
-
-        // action.emit({
-        //     channel: 'sdfadfsaf',
-        //     data: 'test',
-        //     // stores: ['StoreTest', 'StoreTesta', 'StoreTesb']
-        // });
     }
 });
 
@@ -25,15 +16,12 @@ var sto = Store.def('Home', {
 
 });
 
-/**
- * datas.store
- * datas.channel
- * datas.data
- */
-
-
-var a = Store.on((datas) => {
+Store.on((datas) => {
     console.log('on2 ', datas);
+});
+
+Store.on((datas) => {
+    console.log('on2 1', datas);
 });
 // a();
 
