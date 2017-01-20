@@ -1,45 +1,47 @@
+'use strict';
+
+let SYS = require('./sys');
+
 /**
  * Action
- * @author Mofei Zhu <zhuwenlong@baidu.com>
+ * @author Mofei Zhu <13761509829@163.com>
  */
-
 class Action {
-
-    /**
-     * obj.actionGroup
-     * obj.store
-     */
     constructor(obj) {
-        this.stores = {
-            default: []
-        };
-        var actionGroup = obj.actionGroup || 'default';
-        this.stores[actionGroup] = this.stores[actionGroup] || [];
-        this.stores[actionGroup].push(obj.store);
+        this.name = obj.name;
     }
 
     /**
-     * options.actionGroup
      * options.channel
      * options.data
-     * options.reduice
+     * options.reduce
      */
-    
     emit(options) {
-        var _stores = []
-        if (options.actionGroup) {
-            _stores = _stores.concat(this.stores[options.actionGroup]);
-        } else {
-            for (var i in this.stores) {
-                _stores = _stores.concat(this.stores[i]);
-            }
+        let storeNames = [this.name];
+        if (options.stores) {
+            storeNames = options.stores;
         }
 
-        for (var i in _stores) {
-            _stores[i].receive(options.channel, options.data, {
-                reduce: options.reduce
-            });
-        }
+        storeNames.forEach((name) => {
+            if (SYS.stores[name]) {
+                let data = options.data;
+                let channels = options.channel || 'default';
+                channels = typeof channels == 'string' ? [channels] : channels;
+                channels.forEach((channel) => {
+                    SYS.stores[name].receive(channel, data, {
+                        reduce: options.reduce
+                    });
+                });
+            } else {
+                console.warn(`
+                    Can't fine any store called ${name},
+                    You may need:
+                        define a store called ${name} [Store.def(${name},{})]
+                    OR
+                        assign another store name on options [.emit({store:'storename'})]
+                `)
+            }
+        });
     }
 
     /**
@@ -49,19 +51,18 @@ class Action {
      * options.reduice
      */
     echo(options) {
-        var _stores = []
+        let _stores = []
         if (options.actionGroup) {
             _stores = _stores.concat(this.stores[options.actionGroup]);
         } else {
-            for (var i in this.stores) {
+            for (let i in this.stores) {
                 _stores = _stores.concat(this.stores[i]);
             }
         }
 
-        for (var i in _stores) {
+        for (let i in _stores) {
             _stores[i].emit(options.channel, options);
         }
     }
 }
-
-export default Action;
+module.exports = Action;

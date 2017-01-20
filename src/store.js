@@ -1,24 +1,25 @@
+'use strict';
 /**
  * Store
- * @author Mofei Zhu <zhuwenlong@baidu.com>
+ * @author Mofei Zhu <13761509829@163.com>
  */
+
+var SYS = require('./sys.js');
+
 let StoreID = 0;
 
 class Store {
 
-    constructor() {
+    constructor(obj) {
         this.emits = {};
         this.maxId = 0;
         this.StoreID = ++StoreID;
+        this.name = obj.name;
         // {Object}     datas[channel]
-        this.datas = {
-
-        }
+        this.datas = {}
 
         // {Function}   reduces[channel]
-        this.reduces = {
-
-        }
+        this.reduces = {}
     }
 
     /**
@@ -123,10 +124,24 @@ class Store {
         var reduceParam = (options && options.reduce) ? options.reduce : null;
         //
         data = reduce ? reduce(data, reduceParam) : data;
-        for (var i in this.emits[channel]) {
-            this.emits[channel][i](data);
+        var retobj = {
+            data: data,
+            channel: channel,
+            store: this.name
         }
+        for (var i in this.emits[channel]) {
+            this.emits[channel][i](retobj);
+        }
+        // for global listen
+        var globalListenNames = ['root', 'root.' + this.name, 'root.' + this.name + '.' + channel];
+        globalListenNames.forEach((name) => {
+            var stores = SYS.storeListens[name];
+            stores && stores.forEach((sotre) => {
+                sotre(retobj);
+            });
+        });
     }
 }
 
-export default Store;
+
+module.exports = Store;
