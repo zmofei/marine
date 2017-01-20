@@ -8,6 +8,22 @@ marine is a Store - Model model
 ```javascript
 Action.def('Home', {
     'emittest': (action) => {
+        // scripts
+    }
+});
+
+// After you define the action, it will bind to Action automaticly, you can call the function eaisy
+// eg: after define Home, you can use the Home as `Action.Home.emittest`
+Action.Home.emittest();Ï
+```
+
+### action.Emit
+
+
+```javascript
+// this will define the Home action 
+Action.def('Home', {
+    'emittest': (action) => {
         action.emit({
             channel: 'homechannel',
             data: 'test',
@@ -15,11 +31,7 @@ Action.def('Home', {
         });
     }
 });
-
-Action.Home.emittest()
 ```
-
-
 
 ## Store
 
@@ -50,4 +62,15 @@ Store.on('Home.channel', (obj) => {
     // Only listen for events from channel in Home
     console.log('on Home.channel', obj);
 });
+```
+
+### Unbind
+
+```javascript
+var theStore = Store.on((obj) => {
+    // other scripts
+});
+
+// run the return of the Store will unbind the listen
+theStore();
 ```
