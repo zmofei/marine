@@ -1,6 +1,6 @@
-let marine = require('../index.js');
-let Action = marine.Action;
-let Store = marine.Store;
+var marine = require('../index.js');
+var Action = marine.Action;
+var Store = marine.Store;
 
 Action.def('Name', {
     'test': (action) => {
