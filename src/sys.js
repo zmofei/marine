@@ -1,7 +1,8 @@
 var SYS = {
     actions: {},
     stores: {},
-    storeListens: {}
+    storeListens: {},
+    cache: {}
 }
 
 module.exports = SYS;

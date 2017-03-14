@@ -45,23 +45,19 @@ class Action {
     }
 
     /**
-     * options.actionGroup
      * options.channel
-     * options.data
-     * options.reduice
+     * options.reduce
      */
     echo(options) {
-        let _stores = []
-        if (options.actionGroup) {
-            _stores = _stores.concat(this.stores[options.actionGroup]);
-        } else {
-            for (let i in this.stores) {
-                _stores = _stores.concat(this.stores[i]);
-            }
-        }
-
-        for (let i in _stores) {
-            _stores[i].emit(options.channel, options);
+        const name = this.name;
+        if (SYS.stores[name]) {
+            let channels = options.channel || 'default';
+            channels = typeof channels == 'string' ? [channels] : channels;
+            channels.forEach((channel) => {
+                SYS.stores[name].emit(channel, {
+                    reduce: options.reduce
+                });
+            });
         }
     }
 }

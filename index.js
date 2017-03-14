@@ -15,7 +15,8 @@ var Marine = {
          */
         def(name, fns) {
             if (!name) {
-                console.warn('def needs at least one param')
+                console.warn('def needs at least one param');
+                return null;
             }
 
             if (typeof name !== 'string') {
@@ -47,7 +48,8 @@ var Marine = {
          */
         def(name, fns) {
             if (!name) {
-                console.warn('def needs at least one param')
+                console.warn('def needs at least one param');
+                return null;
             }
 
             if (typeof name !== 'string') {
@@ -57,12 +59,6 @@ var Marine = {
 
             Marine.Store[name] = SYS.stores[name] = SYS.stores[name] || new Store({
                 name: name
-            });
-
-            Object.keys(fns).forEach((key) => {
-                Marine.Store[name][key] = () => {
-                    return fns[key](Marine.Store[name]);
-                }
             });
 
             return {

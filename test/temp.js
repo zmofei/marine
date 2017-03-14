@@ -2,49 +2,44 @@ var marine = require('../index.js');
 var Action = marine.Action;
 var Store = marine.Store;
 
-var act = Action.def('Home', {
+var datas = [];
+for (var i = 0; i < 10; i++) {
+    datas.push(parseInt(Math.random() * 100))
+};
+console.log(datas);
+Action.def('Home', {
     'emittest': (action) => {
         action.emit({
             channel: 'homechannel',
-            data: 'test',
-            // stores: ['StoreTest', 'StoreTesta', 'StoreTesb']
+            data: datas,
+            reduce: {
+                emit: (data) => {
+                    data.sort((a, b) => b-a);
+                    return data;
+                },
+                echo: (data) => {
+                    data.sort((a, b) => b - a);
+                    return data;
+                }
+            }
+        });
+    },
+    'echotest': (action) => {
+        action.echo({
+            channel: 'homechannel'
         });
     }
 });
 
-var sto = Store.def('Home', {
+Store.def('Home', {});
 
+
+Store.on('Home.homechannel', (datas) => {
+    console.log(datas);
 });
 
-Store.on((datas) => {
-    console.log('on2 ', datas);
-});
+//
 
-Store.on((datas) => {
-    console.log('on2 1', datas);
-});
-// a();
-
-// Store.on('Home', (datas) => {
-//     console.log('on Home', datas);
-// });
-
-// Store.on('Home.homechannel', (datas) => {
-//     console.log('on Home.homechannel', datas);
-// });
-
-// Store.on('Home.homechannel2', (datas) => {
-//     console.log('on Home.homechannel', datas);
-// });
-
-// Store.Home.on('homechannel', (datas) => {
-//     console.log('Home on homechannel', datas);
-// });
-
-// Store.Home.on('homechannel2', (datas) => {
-//     console.log('Home on homechannel', datas);
-// });
-// //
-
-// console.log(Action.Home.test())
-Action.Home.emittest()
+Action.Home.emittest();
+Action.Home.echotest();
+Action.Home.echotest();

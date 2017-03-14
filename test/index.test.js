@@ -1,23 +1,36 @@
-var marine = require('../index.js');
+let marine = require('../index.js');
+let Action = marine.Action;
+let Store = marine.Store;
+
+Action.def('Name', {
+    'test': (action) => {
+        return action.name;
+    }
+})
+
+Store.def({});
+Store.def('Name', {});
 
 describe('action', () => {
+    it('action without any param', () => {
+        expect(Action.def()).toBe(null);
+    });
+
     it('action without name', () => {
-        expect(marine.Action.def({}).name).toBe('Default');
+        expect(Action.def({}).name).toBe('Default');
     });
 
     it('action with name', () => {
-        expect(marine.Action.def('Name', {}).name).toBe('Name');
+        expect(Action.def('Name', {}).name).toBe('Name');
     });
 
-    marine.Action.def('Name', {
-        'test': (action) => {
-            return action.name;
-        }
-    })
 
-    marine.Store.def('Name', {})
+
+    it('store without any param', () => {
+        expect(Store.def()).toBe(null);
+    });
 
     it('action with test fn', () => {
-        expect(marine.Action.Name.test()).toBe('Name');
+        expect(Action.Name.test()).toBe('Name');
     });
 });
