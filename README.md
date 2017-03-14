@@ -1,6 +1,8 @@
 # marine
 marine is a Store - Model model
 
+[![Build Status](https://travis-ci.org/zmofei/marine.svg?branch=master)](https://travis-ci.org/zmofei/marine)
+
 ## Action
 
 ### Action - Define
