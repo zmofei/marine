@@ -2,6 +2,7 @@
 marine is a Store - Model model
 
 [![Build Status](https://travis-ci.org/zmofei/marine.svg?branch=master)](https://travis-ci.org/zmofei/marine)
+[![npm version](https://img.shields.io/npm/v/marine.svg?style=flat-square)](https://www.npmjs.com/package/marine)
 
 ## Action
 
