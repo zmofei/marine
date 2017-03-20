@@ -29,8 +29,11 @@ var Marine = {
             });
 
             Object.keys(fns).forEach((key) => {
-                Marine.Action[name][key] = () => {
-                    return fns[key](Marine.Action[name]);
+                Marine.Action[name][key] = (...args) => {
+                    let argArr = [Marine.Action[name]];
+                    argArr = argArr.concat(args);
+                    //
+                    return fns[key].apply(this, argArr);
                 }
             });
 

@@ -6,15 +6,15 @@ var datas = [];
 for (var i = 0; i < 10; i++) {
     datas.push(parseInt(Math.random() * 100))
 };
-console.log(datas);
+
 Action.def('Home', {
-    'emittest': (action) => {
+    'emittest': (action, datas) => {
         action.emit({
             channel: 'homechannel',
             data: datas,
             reduce: {
                 emit: (data) => {
-                    data.sort((a, b) => b-a);
+                    data.sort((a, b) => b - a);
                     return data;
                 },
                 echo: (data) => {
@@ -40,6 +40,6 @@ Store.on('Home.homechannel', (datas) => {
 
 //
 
-Action.Home.emittest();
+Action.Home.emittest(datas);
 Action.Home.echotest();
 Action.Home.echotest();

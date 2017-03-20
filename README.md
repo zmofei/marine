@@ -1,79 +1,59 @@
 # marine
-marine is a Store - Model model
+marine 是一个极简的Flux的实现
 
 [![Build Status](https://travis-ci.org/zmofei/marine.svg?branch=master)](https://travis-ci.org/zmofei/marine)
 [![npm version](https://img.shields.io/npm/v/marine.svg?style=flat-square)](https://www.npmjs.com/package/marine)
 
-## Action
+## 简单示例
 
-### Action - Define
-
+#### 1. 定义 Action 和 Store
 ```javascript
-Action.def('Home', {
-    'emittest': (action) => {
-        // scripts
-    }
-});
-
-// After you define the action, it will bind to Action automaticly, you can call the function eaisy
-// eg: after define Home, you can use the Home as `Action.Home.emittest`
-Action.Home.emittest();
-```
-
-### Action - Emit
-
-
-```javascript
-// this will define the Home action 
-Action.def('Home', {
-    'emittest': (action) => {
+// 引入Action
+var marine = require('../index.js');
+var Action = marine.Action;
+// 建立一个叫Demo的Action，Demo中有一个test方法
+Action.def('Demo', {
+    'test': (action, name) => {
         action.emit({
             channel: 'homechannel',
-            data: 'test',
-            // stores: ['StoreTest', 'StoreTesta', 'StoreTesb']
+            data: name || 'test'
         });
     }
 });
+// 建立一个Dome的Store
+Store.def('Home', {});
 ```
-
-## Store
-
-### Store - Define
-
+#### 2.Store监听事件
 ```javascript
-Store.def('Home', {
-
-});
-```
-
-### Store - Listen
-
-the Store return a object, which incloud the `store`, `channel` and `data`
-
-```javascript
-Store.on((obj) => {
-    // It will liesten everything
-    console.log('on', obj);
+// a.js
+// 引入Store
+var marine = require('../index.js');
+var Action = marine.Store;
+// 监听test事件
+Store.on('Demo.test', (data) => {
+    // 当触发Action.Demo.test()时，此处就能接收到
+    console.log(data);
 });
 
-Store.on('Home', (obj) => {
-    // Listen for events from Home event
-    console.log('on Home', obj);
+// 监听Demo下所有的频道事件
+Store.on('Demo.test', (data) => {
+    // 当触发Action.Demo下的任何一个频道时，此处就能接收到
+    console.log(data);
 });
 
-Store.on('Home.channel', (obj) => {
-    // Only listen for events from channel in Home
-    console.log('on Home.channel', obj);
+// 监听所有的Action的所有频道
+Store.on((data) => {
+    // 当触发任何一个Action下的任何一个频道时，此处就能接收到
+    console.log(data);
 });
 ```
-
-### Store - Unbind
-
+#### 3.Action触发事件
 ```javascript
-var theStore = Store.on((obj) => {
-    // other scripts
-});
+// b.js
+// 引入Action
+var marine = require('../index.js');
+var Action = marine.Action;
 
-// run the return of the Store will unbind the listen
-theStore();
+// 触发test事件，此时a.js中的3个监听均能同时受到消息。
+Action.Demo.test('I am Marine');
 ```
