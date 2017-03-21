@@ -31,7 +31,7 @@ Action.def('Home', {
     }
 });
 
-Store.def('Home', {});
+// Store.def('Home', {});
 
 
 Store.on('Home.homechannel', (datas) => {

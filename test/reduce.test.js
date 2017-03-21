@@ -36,8 +36,6 @@ Action.def('Home', {
 
 Store.def('Home', {});
 
-
-
 test('reducefn', (done) => {
     Store.on('Home.reducefn', (datas) => {
         expect([0, 0, 5, 9, 23, 100, 412]).toEqual(datas.data)

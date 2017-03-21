@@ -32,9 +32,9 @@ class Store {
         let hasReduice = options && options.reduce;
         if (hasReduice) {
             if (typeof (hasReduice) !== 'function') {
-                if (hasReduice.emit) {
-                    this.reduceReceive[channel] = hasReduice.emit;
-                }
+                // if (hasReduice.emit) {
+                hasReduice.emit && (this.reduceReceive[channel] = hasReduice.emit);
+                // }
                 if (hasReduice.echo) {
                     this.reduceEmit[channel] = hasReduice.echo;
                 }

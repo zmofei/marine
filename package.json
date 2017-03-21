@@ -18,5 +18,9 @@
   "homepage": "https://github.com/zmofei/marine#readme",
   "devDependencies": {
     "jest": "^18.1.0"
+  },
+  "jest": {
+    "verbose": true,
+    "collectCoverage": true
   }
 }

@@ -11,6 +11,7 @@ marine 是一个极简的Flux的实现
 // 引入Action
 var marine = require('../index.js');
 var Action = marine.Action;
+var Store = marine.Store;
 // 建立一个叫Demo的Action，Demo中有一个test方法
 Action.def('Demo', {
     'test': (action, name) => {
@@ -21,14 +22,13 @@ Action.def('Demo', {
     }
 });
 // 建立一个Dome的Store
-Store.def('Home', {});
 ```
 #### 2.Store监听事件
 ```javascript
 // a.js
 // 引入Store
 var marine = require('../index.js');
-var Action = marine.Store;
+var Store = marine.Store;
 // 监听test事件
 Store.on('Demo.test', (data) => {
     // 当触发Action.Demo.test()时，此处就能接收到
@@ -36,7 +36,7 @@ Store.on('Demo.test', (data) => {
 });
 
 // 监听Demo下所有的频道事件
-Store.on('Demo.test', (data) => {
+Store.on('Demo', (data) => {
     // 当触发Action.Demo下的任何一个频道时，此处就能接收到
     console.log(data);
 });
