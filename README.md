@@ -65,7 +65,7 @@ Action.def方法用来定义Action，其接受2个参数，ChannelName 和 Actio
 
 ##### 1.1.1 ChannelName [String]
 
-ChannelName为当前创建的Action的名称，声明完成之后就可以通过Action.ChannelName来调用对应的ActionFunctions里面的方法了。
+ChannelName为当前创建的Action的名称，声明完成之后就可以通过Action.ChannelName来调用对应的ActionFunctions里面的方法了。
 
 例如我们声明一个名为 Mofei 的 Action，Mofei有2个方法分别为`coding`和`sleep`:
 
