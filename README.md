@@ -9,9 +9,7 @@ marine 是一个极简的Flux的实现
 #### 1. 定义 Action 和 Store
 ```javascript
 // 引入Action
-var marine = require('../index.js');
-var Action = marine.Action;
-var Store = marine.Store;
+import { Action, Store } from 'marine';
 // 建立一个叫Demo的Action，Demo中有一个test方法
 Action.def('Demo', {
     'test': (action, name) => {
@@ -27,8 +25,7 @@ Action.def('Demo', {
 ```javascript
 // a.js
 // 引入Store
-var marine = require('../index.js');
-var Store = marine.Store;
+import { Action, Store } from 'marine';
 // 监听test事件
 Store.on('Demo.test', (data) => {
     // 当触发Action.Demo.test()时，此处就能接收到
@@ -51,8 +48,7 @@ Store.on((data) => {
 ```javascript
 // b.js
 // 引入Action
-var marine = require('../index.js');
-var Action = marine.Action;
+import { Action, Store } from 'marine';
 
 // 触发test事件，此时a.js中的3个监听均能同时受到消息。
 Action.Demo.test('I am Marine');
