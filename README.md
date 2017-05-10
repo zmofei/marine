@@ -67,7 +67,7 @@ Action.def方法用来定义Action，其接受2个参数，ChannelName 和 Actio
 
 ChannelName为当前创建的Action的名称，声明完成之后就可以通过Action.ChannelName来调用对应的ActionFunctions里面的方法了。
 
-例如我们声明一个名为 Mofei 的 Action，Mofei 有2个方法分别为`coding`和`sleep`:
+例如我们声明一个名为 Mofei 的 Action，Mofei有2个方法分别为`coding`和`sleep`:
 
 ```javascript
 import { Action, Store } from 'marine';
@@ -87,13 +87,13 @@ Action.Mofei.sleep();
 
 ##### 1.1.2 ActionFunctions [Object]
 
-ActionFunctions为某个Action的只方法，如上例子中的coding和sleep方法，在创建一个Action时，我们可以指定创建多个Action方法。
+ActionFunctions为某个Action的只方法，如上例子中的coding和sleep方法，在创建一个Action时，我们可以指定创建多个Action方法。
 
 #### 1.2 action
 
 action为ActionFunctions的第一个参数，默认在执行ActionFunctions时Marine会自动的在第一个参数中注入action。
 
-如下例子中，在Action.Mofei.coding方法中第一个形参就是我们的action：
+如下例子中，在Action.Mofei.coding方法中第一个形参就是我们的action：
 
 ```javascript
 import { Action, Store } from 'marine';
