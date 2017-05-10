@@ -32,18 +32,3 @@ test('mulitStore-Mofei', done => {
         done();
     });
 });
-
-// describe('action', () => {
-//     setTimeout(() => {
-//         Action.Home.emittest();
-//     }, 0);
-//     it('Home Store Listen', () => {
-
-//     });
-
-//     it('Mofei Store Listen', () => {
-//         Store.on('Mofei.homechannel', (datas) => {
-//             // expect(datas).toBe('mulit1')
-//         });
-//     });
-// });
