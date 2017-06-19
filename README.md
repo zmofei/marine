@@ -1,18 +1,25 @@
 # marine
-marine 是一个极简的Flux的实现
+marine 是一个极简的Flux的实现，简化了Action和Store的定义，优化了调用不同Action的方法以及Store监听事件的流程。
 
 [![Build Status](https://travis-ci.org/zmofei/marine.svg?branch=master)](https://travis-ci.org/zmofei/marine)
 [![npm version](https://img.shields.io/npm/v/marine.svg?style=flat-square)](https://www.npmjs.com/package/marine)
 
 ## 简单示例
 
-#### 1. 定义 Action 和 Store
+#### 1. 定义 Action
+
 ```javascript
-// 引入Action
+// 引入  Action, Store
 import { Action, Store } from 'marine';
-// 建立一个叫Demo的Action，Demo中有一个test方法
+
+/**
+ * 每个Action有一个名字，以及多个方法
+ * Action可以通过Action.def定义
+ * 
+ * 下例中Action的名字是‘Demo’，它有一个test的方法，调用的是时候，可以用通过 Action.Demo.test() 调用。 
+ */
+
 Action.def('Demo', {
-    // test方法，可以通过Action.Demo.test()调用
     'test': (action, name) => {
         action.emit({
             channel: 'homechannel',
@@ -20,13 +27,24 @@ Action.def('Demo', {
         });
     }
 });
-// 建立一个Dome的Store
 ```
-#### 2.Store监听事件
+
+#### 2. 通过Store监听Action
+
 ```javascript
 // a.js
-// 引入Store
+
+// 引入  Action, Store
 import { Action, Store } from 'marine';
+
+/**
+ * 想要监听一个事件可以通过Store.on来监听
+ * on接受2个参数，第一个参数是你要监听的频道，有下面的3中情况
+ * 1. 监听某个Action下的某个方法，比如'Demo.test'，会监听到Demo的test方法的事件
+ * 2. 监听某个Action下所有的方法，比如'Demo'，这样会监听到Demo下的所有的方法的事件
+ * 3. 监听所有Action下所有的方法，省略第一个参数，就会监听到所有Demo下所有的方法的事件
+ **/
+
 // 监听test事件
 Store.on('Demo.test', (data) => {
     // 当执行Action.Demo.test()时，此处就能接收到
@@ -45,11 +63,17 @@ Store.on((data) => {
     console.log(data);
 });
 ```
+
 #### 3.Action触发事件
 ```javascript
 // b.js
-// 引入Action
+
+// 引入 Action, Store
 import { Action, Store } from 'marine';
+
+/**
+ * 想要调用某个Action的方法，在定了相关的Action之后，可以直接通过Action.[ActionName].[ActionFunction] 调用
+ **/
 
 // 触发test事件，此时a.js中的3个监听均能同时受到消息。
 Action.Demo.test('I am Marine');
@@ -99,7 +123,7 @@ action为ActionFunctions的第一个参数，默认在执行ActionFunctions时Ma
 import { Action, Store } from 'marine';
 
 Action.def('Mofei', {
-    coding: (action,param)=>{
+    coding: (action, param)=>{
         // action.xxx
     }
 })
