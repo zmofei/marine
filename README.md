@@ -14,9 +14,9 @@ import { Action, Store } from 'marine';
 
 /**
  * 每个Action有一个名字，以及多个方法
- * Action可以通过Action.def定义
+ * Action可以通过Action.def定义
  * 
- * 下例中Action的名字是‘Demo’，它有一个test的方法，调用的是时候，可以用通过 Action.Demo.test() 调用。 
+ * 下例中Action的名字是‘Demo’，它有一个test的方法，调用的时候，可以用通过 Action.Demo.test() 调用。 
  */
 
 Action.def('Demo', {
@@ -40,14 +40,14 @@ import { Action, Store } from 'marine';
 /**
  * 想要监听一个事件可以通过Store.on来监听
  * on接受2个参数，第一个参数是你要监听的频道，有下面的3中情况
- * 1. 监听某个Action下的某个方法，比如'Demo.test'，会监听到Demo的test方法的事件
- * 2. 监听某个Action下所有的方法，比如'Demo'，这样会监听到Demo下的所有的方法的事件
- * 3. 监听所有Action下所有的方法，省略第一个参数，就会监听到所有Demo下所有的方法的事件
+ * 1. 监听某个Action下的某个频道，比如'Demo.homechannel'，会监听到来自Action Demo的homechannel频道的事件
+ * 2. 监听某个Action下所有的频道，比如'Demo'，这样会监听到Demo下的所有的频道的事件
+ * 3. 监听所有Action下所有的频道，省略第一个参数，就会监听到所有Demo下所有的频道的事件
  **/
 
 // 监听test事件
-Store.on('Demo.test', (data) => {
-    // 当执行Action.Demo.test()时，此处就能接收到
+Store.on('Demo.homechannel', (data) => {
+    // 当执行Action.Demo.homechannel()时，此处就能接收到
     console.log(data);
 });
 
