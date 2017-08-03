@@ -2,7 +2,7 @@
   "name": "marine",
   "version": "1.0.2",
   "description": "marine is a Store - View model",
-  "main": "src/index.js",
+  "main": "index.js",
   "scripts": {
     "test": "jest"
   },

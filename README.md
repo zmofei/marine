@@ -111,7 +111,7 @@ Action.Mofei.sleep();
 
 ##### 1.1.2 ActionFunctions [Object]
 
-ActionFunctions为某个Action的只方法，如上例子中的coding和sleep方法，在创建一个Action时，我们可以指定创建多个Action方法。
+ActionFunctions为某个Action的子方法，如上例子中的coding和sleep方法，在创建一个Action时，我们可以指定创建多个Action方法。
 
 #### 1.2 action
 
