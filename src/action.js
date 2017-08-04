@@ -15,6 +15,7 @@ class Action {
      * options.channel
      * options.data
      * options.reduce
+     * options.stores
      */
     emit(options) {
         let storeNames = [this.name];
