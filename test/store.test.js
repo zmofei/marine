@@ -18,7 +18,7 @@ Action.def('Home', {
 
 Store.def('Home', {});
 
-test('Listen Pass', (done) => {
+test('Store Pass', (done) => {
     count = 0;
 
     Store.on('Other', (datas) => {

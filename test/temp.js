@@ -34,12 +34,12 @@ Action.def('Home', {
 // Store.def('Home', {});
 
 
-Store.on('Home.homechannel', (datas) => {
+Store.Home.on( (datas) => {
     console.log(datas);
 });
 
 //
 
 Action.Home.emittest(datas);
-Action.Home.echotest();
-Action.Home.echotest();
+// Action.Home.echotest();
+// Action.Home.echotest();
