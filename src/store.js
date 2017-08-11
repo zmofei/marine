@@ -25,7 +25,6 @@ class Store {
     /**
      * @param   {String}    channel
      * @param   {Object}    data
-     * @param   {Object}    optiosn.method [put|update]
      * @param   {Object}    optiosn.reduce the param of reduce
      */
     receive(channel, data, options) {
