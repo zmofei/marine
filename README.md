@@ -91,7 +91,7 @@ Action.Demo.test('I am Marine');
 
 ActionName为当前创建的Action的名称，声明完成之后就可以通过 `Action[ActionName]` 来获取到对应的Action了。
 
-例如我们声明一个名为 Mofei 的 Action，(其中的ActionFunctions我们随后就会介绍):
+例如我们声明一个名为 Mofei 的 Action，(其中的ActionFunctions我们随后就会介绍):
 
 ```javascript
 import { Action } from 'marine';
@@ -152,7 +152,7 @@ Action.Mofei.sleep('home');
 
 #### 1.1.3 Action.def 和 new Action() 方式对比。
 
-上述实例中我们通过Action.def快速定义了Action实例，如果不同通过Action.def定义的话，我们的写法应该如下：
+上述实例中我们通过Action.def快速定义了Action实例，如果不同通过Action.def定义的话，我们的写法应该如下：
 
 ```javascript
 let mofeiAction = new Action('Mofei');
@@ -183,11 +183,30 @@ coding('javascript')
 sleep('home')
 ```
 
-相对比较起来通过def定义的实例方法会自动挂在到Action的全局变量上，你不需要在各个页面中引入具体的方法，只需引入Marine的Action，然后通过 Action[ActionName][functionName] 就可以调用，可以提高不少开发效率。而传统的new Action的方法，你则需要将这些类方法export出去，然后在需要用的地方import进来该方法，可能会稍许麻烦些。
+相对比较起来通过def定义的实例方法会自动挂在到Action的全局变量上，你不需要在各个页面中引入具体的方法，只需引入Marine的Action，然后通过 Action[ActionName][functionName] 就可以调用，可以提高不少开发效率。而传统的new Action的方法，你则需要将这些类方法export出去，然后在需要用的地方import进来该方法，可能会稍许麻烦些。
 
 
 #### 1.2 Action.coustructor(name)
 #### 1.3 action.emit(emitParam)
+
+action.emit 用于分发消息，所有监听被分发的频道的事件均能收到分发的消息。
+
+`emitParam.channel` [String] 分发的channel的名称
+`emitParam.data` [Object] 分发的data数据
+
+```
+Action.def('Mofei', {
+    // emit 方法
+    action.emit({
+        channel: 'coding',
+        data: `I am coding with ${language}`
+    })
+})
+
+// 此时监听了coding频道的所有对象都能获得消息
+// Store.on('Mofei.coding', (data)=>{console.log(data)})
+```
+
 #### 1.4 action.echo(echoParam)
 #### 1.5 action.[emit|echo].reduice(reduiceParam)
 #### 1.6 action.[emit|echo].reduice(reduiceParam)
