@@ -28,4 +28,6 @@ Action.def('Home', {
     }
 });
 
-Action.Home.emittest()
+Action.Home.emittest();
+
+console.log(Action.Home.emit('test','啊啊啊啊'))
