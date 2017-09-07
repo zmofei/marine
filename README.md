@@ -191,8 +191,10 @@ sleep('home')
 
 action.emit 用于分发消息，所有监听被分发的频道的事件均能收到分发的消息。
 
-`emitParam.channel` [String] 分发的channel的名称
-`emitParam.data` [Object] 分发的data数据
+| Param | Type | Explain |
+|:---:|:---:|:---:|
+|emitParam.channel|[String]|分发的channel的名称|
+|emitParam.data|[Object]|分发的data数据|
 
 ```
 Action.def('Mofei', {
