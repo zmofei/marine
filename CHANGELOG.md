@@ -14,3 +14,9 @@ action.emit({
     data: `I am coding with ${language}`
 })
 ```
+
+PS: **快捷方式**，可以在View中直接通过 Action.ActionName.emit() 进行简单的指令发送
+
+```javascript
+Action.Mofei.emit('coding','javascript')
+```
