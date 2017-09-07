@@ -17,8 +17,25 @@ class Action {
      * options.reduce
      * options.stores
      */
-    emit(options) {
+    emit(...arg) {
         let storeNames = [this.name];
+
+        //
+        let options = {};
+        if (typeof arg[0] === 'object') {
+            options = arg[0];
+        } else if (typeof arg[0] === 'string') {
+            options = {
+                channel: arg[0],
+                data: arg[1] || null
+            };
+            if (arg[2]) {
+                Object.keys(arg[2]).forEach(key => {
+                    options[key] = arg[2][key];
+                });
+            }
+        }
+        // 
         if (options.stores) {
             storeNames = options.stores;
         }
@@ -26,7 +43,7 @@ class Action {
         storeNames.forEach((name) => {
             if (!SYS.stores[name]) {
                 SYS.basic.store.def(name);
-            };
+            }
 
             // if (SYS.stores[name]) {
             let data = options.data;

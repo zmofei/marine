@@ -195,6 +195,7 @@ action.emit 用于分发消息，所有监听被分发的频道的事件均能�
 |:---:|:---:|:---:|
 |emitParam.channel|[String]|分发的channel的名称|
 |emitParam.data|[Object]|分发的data数据|
+|emitParam.stores|[Array]|分发到其他的Store监听上，通常只有同名的Store监听能收到消息，指定stores之后可以将消息分发到其他的Store上，如下面例子中的Robin|
 
 用法如下
 
@@ -204,18 +205,56 @@ Action.def('Mofei', {
         // emit 方法
         action.emit({
             channel: 'coding',
-            data: `I am coding with ${language}`
+            data: `I am coding with ${language}`,
+            stores: ['Mofei', 'Robin']
         })
     }
 });
 
 // 触发
-Action.Mofei.coding('javascript')
+Action.Mofei.coding('javascript');
+
 // 此时监听了coding频道的所有对象都能获得消息
 // Store.on('Mofei.coding', (data)=>{
 //    console.log(data)
 //})
+
+// 由于上面制定了stores:['Mofei', 'Robin']所以Robin的监听也能收到消息
+// Store.on('Robin.coding', (data)=>{
+//    console.log(data)
+//})
 ```
+
+or
+
+```javascript
+let Mofei = new Action('Mofei');
+Mofei.emit({
+    channel: 'coding',
+    data: `I am coding with javascirpt`
+})
+```
+
+**语法糖**
+
+你也可以使用action.echo(channel, data, options)来快速调用echo方法
+
+```JavaScript
+action.emit({
+    channel: 'coding',
+    data: `I am coding with ${language}`,
+    stores: ['Mofei', 'Robin']
+})
+```
+
+等同于
+
+```JavaScript
+action.emit('coding', `I am coding with ${language}`, {
+    stores: ['Mofei', 'Robin']
+})
+```
+
 
 #### 1.4 action.echo(echoParam)
 #### 1.5 action.[emit|echo].reduice(reduiceParam)
