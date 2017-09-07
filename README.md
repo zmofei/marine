@@ -196,17 +196,25 @@ action.emit 用于分发消息，所有监听被分发的频道的事件均能�
 |emitParam.channel|[String]|分发的channel的名称|
 |emitParam.data|[Object]|分发的data数据|
 
-```
-Action.def('Mofei', {
-    // emit 方法
-    action.emit({
-        channel: 'coding',
-        data: `I am coding with ${language}`
-    })
-})
+用法如下
 
+```javascript
+Action.def('Mofei', {
+    coding: (action, language)=>{
+        // emit 方法
+        action.emit({
+            channel: 'coding',
+            data: `I am coding with ${language}`
+        })
+    }
+});
+
+// 触发
+Action.Mofei.coding('javascript')
 // 此时监听了coding频道的所有对象都能获得消息
-// Store.on('Mofei.coding', (data)=>{console.log(data)})
+// Store.on('Mofei.coding', (data)=>{
+//    console.log(data)
+//})
 ```
 
 #### 1.4 action.echo(echoParam)
