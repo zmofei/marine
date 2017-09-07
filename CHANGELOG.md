@@ -15,7 +15,7 @@ action.emit({
 })
 ```
 
-PS: **快捷方式**，可以在View中直接通过 Action.ActionName.emit() 进行简单的指令发送
+PS: **快捷方式**，可以在View中直接通过 Action.ActionName.emit() 进行简单的指令的发送，如：
 
 ```javascript
 Action.Mofei.emit('coding','javascript')
