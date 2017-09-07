@@ -1,6 +1,6 @@
 {
   "name": "marine",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "marine is a Store - View model",
   "main": "index.js",
   "scripts": {

@@ -2,44 +2,32 @@ var marine = require('../index.js');
 var Action = marine.Action;
 var Store = marine.Store;
 
-var datas = [];
-for (var i = 0; i < 10; i++) {
-    datas.push(parseInt(Math.random() * 100))
-};
+// var datas = [];
+// for (var i = 0; i < 10; i++) {
+//     datas.push(parseInt(Math.random() * 100))
+// };
+
+// Action.Mofei.actionWidthoutDefine('xxxx');
+
+// // Store.def('Home', {});
+// Store.on((datas) => {
+//     console.log(datas);
+// });
+
+// //
+
+// Action.Home.emittest(datas);
+
+Store.on((data) => {
+    console.log(data);
+});
 
 Action.def('Home', {
-    'emittest': (action, datas) => {
-        action.emit({
-            channel: 'homechannel',
-            data: datas,
-            reduce: {
-                emit: (data) => {
-                    data.sort((a, b) => b - a);
-                    return data;
-                },
-                echo: (data) => {
-                    data.sort((a, b) => b - a);
-                    return data;
-                }
-            }
-        });
-    },
-    'echotest': (action) => {
-        action.echo({
-            channel: 'homechannel'
-        });
+    'emittest': (action) => {
+        action.emit('homechannel');
     }
 });
 
-// Store.def('Home', {});
+Action.Home.emittest();
 
-
-Store.on('Home.homechannel', (datas) => {
-    console.log(datas);
-});
-
-//
-
-Action.Home.emittest(datas);
-Action.Home.echotest();
-Action.Home.echotest();
+console.log(Action.Home.emit('test','啊啊啊啊'))

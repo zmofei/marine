@@ -8,15 +8,12 @@ Action.def('Home', {
             channel: 'homechannel',
             data: 'test'
         });
-    },
-    'echotest': (action) => {
-        action.echo({
-            channel: 'homechannel'
-        });
     }
 });
 
 Store.def('Home', {});
+
+
 
 test('Listen Pass', (done) => {
     count = 0;
@@ -43,9 +40,9 @@ test('Listen Pass', (done) => {
             data.store === 'Home') {
             count += 1;
         }
-        if (count == 6) {
+        if (count == 3) {
             setTimeout(() => {
-                count == 6 ? done() : '';
+                count == 3 ? done() : '';
             }, 1000)
         }
     }
@@ -54,5 +51,4 @@ test('Listen Pass', (done) => {
 //
 setTimeout(() => {
     Action.Home.emittest();
-    Action.Home.echotest();
 }, 0);

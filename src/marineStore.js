@@ -34,6 +34,8 @@ function marineStore(Marine) {
          * Store.on(()=>{})
          * Store.on('Home',()=>{})
          * Store.on('Home.channel',()=>{})
+         * TODO:
+         * Store.Home.on(channel=>{})
          */
         on(channel, fn) {
             if (typeof channel === 'function') {

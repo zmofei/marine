@@ -64,7 +64,7 @@ Store.on((data) => {
 });
 ```
 
-#### 3.Action触发事件
+#### 3.View中通过Action触发事件
 ```javascript
 // b.js
 
@@ -83,59 +83,188 @@ Action.Demo.test('I am Marine');
 
 ### 1. Action
 
-#### 1.1 Action.def(ChannelName, ActionFunctions)
+#### 1.1 Action.def(ActionName, ActionFunctions)
 
-Action.def方法用来定义Action，其接受2个参数，ChannelName 和 ActionFunctions。 
+该方法用以定义Action，是快速定义Action的语法糖。
 
-##### 1.1.1 ChannelName [String]
+##### 1.1.1 ActionName [String]
 
-ChannelName为当前创建的Action的名称，声明完成之后就可以通过Action.ChannelName来调用对应的ActionFunctions里面的方法了。
+ActionName为当前创建的Action的名称，声明完成之后就可以通过 `Action[ActionName]` 来获取到对应的Action了。
 
-例如我们声明一个名为 Mofei 的 Action，Mofei有2个方法分别为`coding`和`sleep`:
+例如我们声明一个名为 Mofei 的 Action，(其中的ActionFunctions我们随后就会介绍):
 
 ```javascript
-import { Action, Store } from 'marine';
+import { Action } from 'marine';
 
+Action.def('Mofei', ActionFunctions)
+```
+
+定义之后，就可以在任意的页面中通过引入Action，然后调用Action.Mofei获取到这个Action对象了,例如：
+
+```javascript
+import { Action } from 'marine';
+
+// 此时Action.Mofei就是我们刚刚通过def定义的Action了。
+console.log(Action.Mofei);
+```
+
+##### 1.1.2 ActionFunctions [Object]
+
+接下来介绍一下ActionFunctions，ActionFunctions为JSON类型的键值对，其中key为当前Action实例的方法名称，value为Function对应的具体的Action方法。在Action实例方法中，`第一个参数就是我们当前的Action实例对象`，例如
+
+例如在刚刚名为 Mofei 的 Action，我们想添加2个方法 `coding`和`sleep`:
+
+```javascript
+import { Action } from 'marine';
+
+// 定义Mofei实例，后续可以通过 Action.Mofei获取该实例
 Action.def('Mofei', {
-    coding: [Function],
-    sleep: [Function]
+    // 定义实例方法，后续可以通过 Action.Mofei.coding('javascript')调用该方法
+    // 实例方法的第一个参会自动传入当前的Action实例，该处就是Action.Mofei，
+    // 第二个参数开始为用户自定义传入的参数，
+    // 比如这里的第二个参数language就是Action.Mofei.coding('javascript')中的`javascirpt`
+    coding: (action, language)=>{
+        // 实例方法中我们可以直接通过Aciton的任何方法
+        // 这里我们调用了action的emit方法
+        action.emit({
+            channel: 'coding',
+            data: `I am coding with ${language}`
+        })
+    },
+    sleep: (action,place)=>{
+        action.emit({
+            channel: 'coding',
+            data: `I am sleeping at ${place}`
+        })
+    }
 })
 ```
 
 声明完成之后我们就可以通过Action.Mofei调用对应的方法了，如：
 
 ```javascript
-Action.Mofei.coding();
-Action.Mofei.sleep();
+// 引入Action
+import { Action } from 'marine';
+
+Action.Mofei.coding('javascript');
+Action.Mofei.sleep('home');
 ```
 
-##### 1.1.2 ActionFunctions [Object]
+#### 1.1.3 Action.def 和 new Action() 方式对比。
 
-ActionFunctions为某个Action的子方法，如上例子中的coding和sleep方法，在创建一个Action时，我们可以指定创建多个Action方法。
-
-#### 1.2 action
-
-action为ActionFunctions的第一个参数，默认在执行ActionFunctions时Marine会自动的在第一个参数中注入action。
-
-如下例子中，在Action.Mofei.coding方法中第一个形参就是我们的action：
+上述实例中我们通过Action.def快速定义了Action实例，如果不同通过Action.def定义的话，我们的写法应该如下：
 
 ```javascript
-import { Action, Store } from 'marine';
+let mofeiAction = new Action('Mofei');
 
+let conding(language) => {
+    mofeiAction.emit({
+        channel: 'coding',
+        data: `I am sleeping at ${place}`
+    })
+}
+
+let sleep(palce) => {
+    mofeiAction.emit({
+        channel: 'coding',
+        data: `I am sleeping at ${place}`
+    })
+}
+
+export {coding, sleep};
+```
+
+调用的时候我们需要引入`coding` 或者 `sleep`
+
+```javascript
+import {coding, sleep} from 'path';
+
+coding('javascript')
+sleep('home')
+```
+
+相对比较起来通过def定义的实例方法会自动挂在到Action的全局变量上，你不需要在各个页面中引入具体的方法，只需引入Marine的Action，然后通过 Action[ActionName][functionName] 就可以调用，可以提高不少开发效率。而传统的new Action的方法，你则需要将这些类方法export出去，然后在需要用的地方import进来该方法，可能会稍许麻烦些。
+
+
+#### 1.2 Action.coustructor(name)
+#### 1.3 action.emit(emitParam)
+
+action.emit 用于分发消息，所有监听被分发的频道的事件均能收到分发的消息。
+
+| Param | Type | Explain |
+|:---:|:---:|:---:|
+|emitParam.channel|[String]|分发的channel的名称|
+|emitParam.data|[Object]|分发的data数据|
+|emitParam.stores|[Array]|分发到其他的Store监听上，通常只有同名的Store监听能收到消息，指定stores之后可以将消息分发到其他的Store上，如下面例子中的Robin|
+
+用法如下
+
+```javascript
 Action.def('Mofei', {
-    coding: (action, param)=>{
-        // action.xxx
+    coding: (action, language)=>{
+        // emit 方法
+        action.emit({
+            channel: 'coding',
+            data: `I am coding with ${language}`,
+            stores: ['Mofei', 'Robin']
+        })
     }
+});
+
+// 触发
+Action.Mofei.coding('javascript');
+
+// 此时监听了coding频道的所有对象都能获得消息
+// Store.on('Mofei.coding', (data)=>{
+//    console.log(data)
+//})
+
+// 由于上面制定了stores:['Mofei', 'Robin']所以Robin的监听也能收到消息
+// Store.on('Robin.coding', (data)=>{
+//    console.log(data)
+//})
+```
+
+or
+
+```javascript
+let Mofei = new Action('Mofei');
+Mofei.emit({
+    channel: 'coding',
+    data: `I am coding with javascirpt`
 })
 ```
-#### 1.2.1 action.emit(emitParam)
-#### 1.2.2 action.echo(echoParam)
-#### 1.2.3 action.[emit|echo].reduice(reduiceParam)
-#### 1.2.4 action.[emit|echo].reduice(reduiceParam)
-#### 1.2.5 action.[emit|echo].channel(channelNames) [String|Array]
-#### 1.2.6 action.[emit|echo].stores(storesNames) [Array]
+
+**语法糖**
+
+你也可以使用action.echo(channel, data, options)来快速调用echo方法
+
+```JavaScript
+action.emit({
+    channel: 'coding',
+    data: `I am coding with ${language}`,
+    stores: ['Mofei', 'Robin']
+})
+```
+
+等同于
+
+```JavaScript
+action.emit('coding', `I am coding with ${language}`, {
+    stores: ['Mofei', 'Robin']
+})
+```
+
+
+#### 1.4 action.echo(echoParam)
+#### 1.5 action.[emit|echo].reduice(reduiceParam)
+#### 1.6 action.[emit|echo].reduice(reduiceParam)
+#### 1.7 action.[emit|echo].channel(channelNames) [String|Array]
+#### 1.8 action.[emit|echo].stores(storesNames) [Array]
 
 
 ### 2. Store
 
 #### 2.1 Store.on(ChannelName, callback)
+
+#### 2.2 Store() 
