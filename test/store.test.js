@@ -1,4 +1,4 @@
-var marine = require('../index.js');
+var marine = require('../src/index.js');
 var Action = marine.Action;
 var Store = marine.Store;
 
@@ -19,7 +19,7 @@ Action.def('Home', {
 Store.def('Home', {});
 
 test('Store Pass', (done) => {
-    count = 0;
+    let count = 0;
 
     Store.on('Other', (datas) => {
         listenCheck(datas)
