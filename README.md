@@ -129,6 +129,10 @@ import { Action, Store } from 'marine';
 
 // 触发test事件，此时a.js中的3个监听均能同时受到消息。
 Action.Demo.test('I am Marine');
+
+// 在快速示例中我们使用的是
+// Action.Demo.emit('hello', 'I am Marine')
+// 省略了action方法hello的定义，但是相对来说增加了action的管理成本。
 ```
 
 

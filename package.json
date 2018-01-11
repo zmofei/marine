@@ -17,11 +17,15 @@
   },
   "homepage": "https://github.com/zmofei/marine#readme",
   "devDependencies": {
-    "babel-preset-env": "^1.6.0",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
     "jest": "^18.1.0"
   },
   "jest": {
     "verbose": true,
     "collectCoverage": true
+  },
+  "dependencies": {
+    "react-bmap": "^1.0.67"
   }
 }
