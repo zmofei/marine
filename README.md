@@ -4,7 +4,50 @@ marine 是一个极简的Flux的实现，简化了Action和Store的定义，优�
 [![Build Status](https://travis-ci.org/zmofei/marine.svg?branch=master)](https://travis-ci.org/zmofei/marine)
 [![npm version](https://img.shields.io/npm/v/marine.svg?style=flat-square)](https://www.npmjs.com/package/marine)
 
+## 快速示例
+
+#### step 1 定义Action
+
+```javascript
+// 引入  Action, Store
+import { Action } from 'marine';
+
+// 定义名为Demo的Action
+Action.def('Demo');
+```
+
+#### step 2 监听消息
+
+我们可以在任意页面通过Store.on来监听来自Action的消息
+
+```javascript
+// 引入  Action, Store
+import { Store } from 'marine';
+
+// 监听Demo Action的hello频道
+Store.on('Demo.hello', StoreDate =>{
+    console.log(StoreDate.data)
+});
+```
+
+#### step 3 分发消息
+
+定义了Action之后，可以在任意文件中通过 Action[ActionName].emit 方法发送消息
+
+```javascript
+// 引入  Action, Store
+import { Action } from 'marine';
+
+// 分发消息
+Action.Demo.emit('hello', 'Hello Marine');
+
+// 消息分发之后，所有监听了对于频道的回调都会被调用
+// 这里触发之后第二步的 console.log(StoreDate.data) 就会被触发。
+```
+
 ## 简单示例
+
+除了上述的快速示例外，我们也可以通过常规的Action.def的方法指定Action方法，并通过Action[ActionName][fnName]去调用
 
 #### 1. 定义 Action
 
@@ -20,11 +63,20 @@ import { Action, Store } from 'marine';
  */
 
 Action.def('Demo', {
-    'test': (action, name) => {
+    // 在快速示例中，我们没有定义Demo的方法
+    // 这里我们通过Action方法来定义hello方法
+    'hello': (action, name) => {
+        // Action 方法的第一个参数是action对象，后续的参数为用户传递进来的参数
         action.emit({
             channel: 'homechannel',
-            data: name || 'test'
+            data: name || 'Mofei'
         });
+        // 这里我们也可以简单的写成 action.emit('homechannel', name)
+        // 在快速示例中，我们是通过 Action.Demo 获取到了 action 对象，然后通过emit方法传递消息, 如下：
+        // Action.Demo.emit('hello', 'Hello Marine');
+        // 其实这句话也等同于 Action.Demo.hello('Hello Marine')，
+        // 其中的 Action.Demo.hello 方法就是我们现在定义的这个hello方法。
+        // 虽然这种写法没有快速示例简单，但是带给我们的是可以在同一个地方定义所有的Action方法，方便管理
     }
 });
 ```
@@ -78,6 +130,7 @@ import { Action, Store } from 'marine';
 // 触发test事件，此时a.js中的3个监听均能同时受到消息。
 Action.Demo.test('I am Marine');
 ```
+
 
 ## API
 
