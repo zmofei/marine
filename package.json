@@ -1,10 +1,12 @@
 {
   "name": "marine",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "marine is a Store - View model",
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "prepublish": "babel src/ --out-dir lib/",
+    "publish": "npm publish"
   },
   "repository": {
     "type": "git",
