@@ -1,4 +1,5 @@
-var marine = require('../index.js');
+/* globals test */
+var marine = require('../src/index.js');
 var Action = marine.Action;
 var Store = marine.Store;
 
@@ -15,22 +16,22 @@ Store.def('Home', {});
 
 
 test('Unbind test', (done) => {
-    count = 0;
+    let count = 0;
 
     Store.on('Other', (datas) => {
-        listenCheck(datas)
+        listenCheck(datas);
     })();
 
     Store.on((datas) => {
-        listenCheck(datas)
+        listenCheck(datas);
     })();
 
     Store.on('Home', (datas) => {
-        listenCheck(datas)
+        listenCheck(datas);
     })();
 
     Store.on('Home.homechannel', (datas) => {
-        listenCheck(datas)
+        listenCheck(datas);
     })();
 
     function listenCheck(data) {
@@ -43,7 +44,7 @@ test('Unbind test', (done) => {
 
     setTimeout(() => {
         count == 0 ? done() : '';
-    }, 1000)
+    }, 1000);
 });
 
 //

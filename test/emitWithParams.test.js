@@ -2,7 +2,7 @@
  * this test is to test Action.emit(Channel, data)
  */
 
-var marine = require('../index.js');
+var marine = require('../src/index.js');
 var Action = marine.Action;
 var Store = marine.Store;
 

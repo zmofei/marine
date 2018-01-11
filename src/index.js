@@ -1,13 +1,13 @@
-var marineAction = require('./src/marineAction');
-var marineStore = require('./src/marineStore');
-var sys = require('./src/sys');
+var marineAction = require('./marineAction');
+var marineStore = require('./marineStore');
+var sys = require('./sys');
 
-var Marine = {}
+var Marine = {};
 Marine.Action = marineAction(Marine);
 Marine.Store = marineStore(Marine);
 sys.basic = {
     action: Marine.Action,
     store: Marine.Store
-}
+};
 
 module.exports = Marine;

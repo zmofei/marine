@@ -1,8 +1,8 @@
 {
   "name": "marine",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "marine is a Store - View model",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "jest"
   },
@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/zmofei/marine#readme",
   "devDependencies": {
+    "babel-preset-env": "^1.6.0",
     "jest": "^18.1.0"
   },
   "jest": {
