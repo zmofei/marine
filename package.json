@@ -1,11 +1,11 @@
 {
   "name": "marine",
-  "version": "1.0.6",
+  "version": "1.0.11",
   "description": "marine is a Store - View model",
   "main": "lib/index.js",
   "scripts": {
     "test": "jest",
-    "prepublish": "babel src/ --out-dir lib/",
+    "prepublish": "rm -rf lib && babel src/ --out-dir lib/",
     "publish": "npm publish"
   },
   "repository": {
@@ -26,8 +26,5 @@
   "jest": {
     "verbose": true,
     "collectCoverage": true
-  },
-  "dependencies": {
-    "react-bmap": "^1.0.67"
   }
 }
