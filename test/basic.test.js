@@ -2,11 +2,13 @@ var marine = require('../src/index.js');
 var Action = marine.Action;
 var Store = marine.Store;
 
+Action.def('Test');
+
 Action.def('Name', {
     'test': (action) => {
         return action.name;
     }
-})
+});
 
 Store.def({});
 Store.def('Name', {});

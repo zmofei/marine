@@ -2,6 +2,8 @@
  * this test is to test Action.emit(Channel, data)
  */
 
+/* globals test */
+
 var marine = require('../src/index.js');
 var Action = marine.Action;
 var Store = marine.Store;
@@ -14,11 +16,19 @@ Action.def('Home', {
 
         action.emit('homechannel', 'test');
         action.emit('homechannel');
-        // action.emit('homechannel');
     }
 });
 
-Store.def('Home', {});
+//
+setTimeout(() => {
+    Action.Home.emittest();
+    Action.Home.emit('withoutEmitFn', 'mofei');
+    Action.Home.emit({
+        channel: 'withoutEmitFn',
+        data: 'mofei'
+    });
+    // console.log(Action.Home.emit)
+}, 0);
 
 
 
@@ -45,22 +55,28 @@ test('emit with params', (done) => {
         listenCheck(datas);
     });
 
+    Store.on('Home.withoutEmitFn', StoreData => {
+        if (StoreData.data === 'mofei') {
+            count += 1;
+        }
+        checkCount();
+    });
+
     function listenCheck(data) {
         if (data.data === 'test' &&
             data.channel === 'homechannel' &&
             (data.store === 'Robin' || data.store === 'Home')) {
             count += 1;
         }
-        
-        if (count == 8) {
+
+        checkCount();
+    }
+
+    function checkCount() {
+        if (count == 10) {
             setTimeout(() => {
-                count == 8 ? done() : '';
+                count == 10 ? done() : '';
             }, 1000);
         }
     }
 });
-
-//
-setTimeout(() => {
-    Action.Home.emittest();
-}, 0);

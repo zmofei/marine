@@ -18,7 +18,7 @@ function marineAction(Marine) {
          *      // the functiosn of Home
          * })
          */
-        def(name, fns) {
+        def(name, fns = {}) {
             if (!name) {
                 console.warn('def needs at least one param');
                 return null;
@@ -27,7 +27,7 @@ function marineAction(Marine) {
             if (typeof name !== 'string') {
                 fns = name;
                 name = 'Default';
-            };
+            }
 
             Marine.Action[name] = SYS.actions[name] = SYS.actions[name] || new Action({
                 name: name

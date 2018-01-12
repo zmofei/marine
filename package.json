@@ -1,10 +1,12 @@
 {
   "name": "marine",
-  "version": "1.0.5",
+  "version": "1.0.11",
   "description": "marine is a Store - View model",
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "prepublish": "rm -rf lib && babel src/ --out-dir lib/",
+    "publish": "npm publish"
   },
   "repository": {
     "type": "git",
@@ -17,7 +19,8 @@
   },
   "homepage": "https://github.com/zmofei/marine#readme",
   "devDependencies": {
-    "babel-preset-env": "^1.6.0",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
     "jest": "^18.1.0"
   },
   "jest": {
