@@ -1,8 +1,40 @@
-# marine
+# Marine
+
 marine 是一个极简的Flux的实现，简化了Action和Store的定义，优化了调用不同Action的方法以及Store监听事件的流程。
 
 [![Build Status](https://travis-ci.org/zmofei/marine.svg?branch=master)](https://travis-ci.org/zmofei/marine)
 [![npm version](https://img.shields.io/npm/v/marine.svg?style=flat-square)](https://www.npmjs.com/package/marine)
+
+
+## 有了React Redux为什么还要有Marine呢？
+
+
+### 1. props vs state
+
+假设我们在页面中有这样一个Div我们可以通过鼠标或者代码去修改他的颜色、大小、边框等任何可以通过CSS描述的信息，通过props我们需要样控制：
+
+**把所有的属性写在props中，在Div的Style中继承props的所有属性**
+
+![props](doc/image/props.png)
+
+这会导致：
+
+1. 数据源庞大：我们需要将所有的修改属性都放在props上可能会异常的庞大。
+2. 过多的渲染流程：每次修改任何一个属性我们都得通知到数据源上，然后再通过props传到当前的模块中，再进行二次渲染。这在用户可以交互的场景下尤为常见，试想一下拖动div的位置，每次mousemove的时候，都要把位置传给数据源然后再通过props传回到当前模块中。
+3. 过多的无效通知：如果一个数据源成为了多个组件的props，每次修改数据源所有的组件都需要去响应这个props的改变去判断是否需要变化。
+
+这样一些列的问题会使得在可交互场景下去控制数据变得十分困难，我们需要思考这样一个问题：每个模块中的属性修改是否需要通知根数据源？是否需要让每个相关的模块都知道呢？
+
+![props](doc/image/props2.png)
+
+为了解决这些问题，一个有好的Pub/Sub就能解决。比如我们在每个模块的初始化时候自动监听一个频道，告诉这个频道我只接受什么样的信息，每次接收到新的数据就将将拿到的信息都存在自己的state中，如果需要通知其他的模块修改某些东西也可以通过这个管道发送给对方。这就是Marine的最基本的实现。
+
+![props](doc/image/marine.png)
+
+在Marine中，每个模块都可以监听自己想要监听的频道，当这个频道中有更新时该模块会第一时间收到（而其他频道的消息会被Marine自动过滤掉以做到安静无打扰），同时模块如有需要也可以在任何时间向某个频道发送必要的消息。
+
+在Marine中，模块只需要关注自己的数据(State)，处理和接收到的自己相关的数据，以及在必要的时候通知其他的模块，就可以顺利的完成很多任务。我们设计了很多超级简单高效的API可供使用，快来试试吧。
+
 
 ## 快速示例
 
