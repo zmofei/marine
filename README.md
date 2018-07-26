@@ -6,7 +6,7 @@ Marine 是一个极简的Flux的实现，简化了Action和Store的定义，优�
 [![npm version](https://img.shields.io/npm/v/marine.svg?style=flat-square)](https://www.npmjs.com/package/marine)
 
 
-## 有了React Redux为什么还要有Marine呢？
+## 有了这么多的类似React Redux之类的库，为什么还要有Marine呢？
 
 
 ### 1. props vs state
