@@ -1,10 +1,11 @@
 # Marine
 
+[English Version](README.en.md)
+
 Marine 是一个极简的Flux的实现，简化了Action和Store的定义，优化了调用不同Action的方法以及Store监听事件的流程。
 
 [![Build Status](https://travis-ci.org/zmofei/marine.svg?branch=master)](https://travis-ci.org/zmofei/marine)
 [![npm version](https://img.shields.io/npm/v/marine.svg?style=flat-square)](https://www.npmjs.com/package/marine)
-
 
 ## 有了这么多的类似React Redux之类的库，为什么还要有Marine呢？
 
