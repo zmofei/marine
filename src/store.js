@@ -28,9 +28,10 @@ class Store {
      * @param   {Object}    optiosn.reduce the param of reduce
      */
     receive(channel, data, options) {
+
         let hasReduice = options && options.reduce;
         if (hasReduice) {
-            if (typeof (hasReduice) !== 'function') {
+            if (typeof(hasReduice) !== 'function') {
                 // if (hasReduice.emit) {
                 hasReduice.emit && (this.reduceReceive[channel] = hasReduice.emit);
                 // }
@@ -57,11 +58,10 @@ class Store {
      * @param   {Object}    options.reduce  the param of reduce
      */
     emit(channel, options) {
-        var data = this.datas[channel] || [];
+        var data = this.datas[channel];
         var reduce = options && options.reduce;
         reduce = reduce || this.reduceEmit[channel];
         data = reduce ? reduce(data) : data;
-
         var retobj = {
             data: data,
             channel: channel,
