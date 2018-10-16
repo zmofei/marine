@@ -13,13 +13,6 @@ Action.def('Home', {
 
 Store.def('Home', {});
 
-test('Emite null should get null', (done) => {
-    Store.on('Home.null', (datas) => {
-        if (datas.data === null) {
-            done();
-        }
-    });
-});
 
 test('Listen Pass', (done) => {
     let count = 0;
@@ -58,5 +51,4 @@ test('Listen Pass', (done) => {
 //
 setTimeout(() => {
     Action.Home.emittest();
-    Action.Home.emit('null', null);
 }, 0);
